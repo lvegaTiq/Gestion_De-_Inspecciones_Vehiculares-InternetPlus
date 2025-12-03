@@ -23,4 +23,7 @@ const propietarioSchema= new mongoose.Schema({
         type: Number,
         require: true
     }
-}) 
+})
+
+propietarioSchema.plugin(mongoosePaginate);
+export default mongoose.model("propietario", propietarioSchema);

@@ -1,40 +1,43 @@
-import mongoose, { mongo, Schema, Types } from "mongoose";
+import mongoose from "mongoose";
 import mongoosePaginate from 'mongoose-paginate-v2';
 
 const UserSchema = new mongoose.Schema({
-    Nombre: {
-        type: String
+    nombre: {
+        type: String,
+        required: true
     },
-    Apellido: {
-        type: String
+    apellido: {
+        type: String,
+        required: true
     },
-    TipoDocumento: {
+    tipoDocumento: {
         type: String,
         enum: ['Cedula de ciudadania', 'Cedula de extranjería', 'Pasaporte'],
-        require: true
+        required: true
     },
-    Documento: {
+    documento: {
         type: String,
         unique: true,
-        require: true
+        required: true
     },
 
-    Email: {
+    email: {
         type:String,
         unique:true,
-        require: true
+        required: true
     },
-    Telefono: {
-        type:Number
+    telefono: {
+        type:Number,
+        required: true
     },
     password: {
         type: String,
-        require:true
+        required:true
     },
-    Role: {
+    role: {
         type: String,
         enum: ['Admin', 'Supervisor'],
-        require: true
+        required: true
     }
 })
 

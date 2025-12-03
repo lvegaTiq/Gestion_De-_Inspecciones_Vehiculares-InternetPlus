@@ -12,6 +12,14 @@ const vehiculoSchema = new mongoose.Schema({
         type: String
     },
     FechaSoat: {
-        type: Date
+        type: Date,
+        require: true
+    },
+    FechaTecno: {
+        type: Date,
+        require: true
     }
 })
+
+vehiculoSchema.plugin(mongoosePaginate);
+export default mongoose.model('vehiculo', vehiculoSchema);
