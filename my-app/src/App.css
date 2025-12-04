@@ -68,3 +68,130 @@ body{
   transition: 1s;
   transform: scale(1.01);
 }
+
+/*Estilos menu admin*/
+.contentAdmin{
+  background-color: #33333369;
+  width: 100%;
+  height: 100vh;
+}
+
+.navAdmin{
+  background-color: #D9D9D9;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navAdmin img{
+   width: 10%;
+   margin: 1rem 2rem;
+}
+
+.navAdmin .navbar{
+  margin: 1rem 2rem;
+}
+.navbar ul{
+  list-style: none;
+  display: flex;
+
+}
+
+.navbar ul li{
+  margin: 1rem;
+}
+.navbar ul a{
+  text-decoration: none;
+  color: #333;
+}
+.navbar ul a:hover{
+  text-decoration: underline;
+}
+
+.contentAdmin1{
+  display: flex;
+  flex-direction: column;
+}
+
+.minicards{
+  display: flex;
+  justify-content: space-evenly;
+  margin: 2rem 2rem;
+}
+
+.minicards .card1{
+  background-color: aliceblue;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.minicards .card1 img{
+  width: 40%;
+  margin-right: 0.7rem;
+}
+
+.textcard h3{
+  font-size: 14px;
+}
+
+.tablausers{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.barrabusqueda{
+  width: 100%;
+  padding: 1rem 6.5rem;
+  justify-content: space-between;
+}
+.textBarraBusqueda{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} 
+.textBarraBusqueda h4{
+  font-size: 26px;
+  color: aliceblue;
+}
+.barrabusqueda button{
+  padding: 9px 20px;
+  border-radius: 7px;
+  background-color: #B3E0F2;
+  border: 1px solid aliceblue;
+}
+
+
+.barrabusqueda input{
+  background-color: #F2F2F2;
+  width: 81%;
+  height: 40px;
+  border-radius: 7px;
+  margin: 1rem 3rem;
+  border: 1px solid #333;
+  padding: 12px;
+}
+
+
+.tablausersData{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tablausersData table{
+  background-color: #F2F2F2;
+  width: 95%;
+  margin: 1rem 8.5rem;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+}
+.tablausersData table th{
+  padding-right: 40px;
+  border-bottom: 1px solid #333;
+}

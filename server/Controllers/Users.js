@@ -26,8 +26,10 @@ export const getData = async(req, res )=>{
 }
 
 export const create = async(req, res)=>{
-    try{
-        if (Object.keys(req.body).length === 0) {
+    try{ 
+        console.log("BODY:", req.body);
+
+        if (!req.body || Object.keys(req.body).length === 0) {
           return res.status(400).json({
             success: false,
             message: "Body vacío"
