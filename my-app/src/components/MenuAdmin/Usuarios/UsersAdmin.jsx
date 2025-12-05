@@ -1,12 +1,21 @@
-import logo from '../../assets/img/logo/LogoSinFondo.png'
-import Usarios from '../../assets/img/Admin/usuario.png'
-import VehiculoA from '../../assets/img/Admin/VehiculoA.png'
-import VehiculoR from '../../assets/img/Admin/vehiculoR.png'
-import Propietario from '../../assets/img/Admin/propietario.png'
-import Conductor from '../../assets/img/Admin/conductor.png'
+import logo from '../../../assets/img/logo/LogoSinFondo.png'
+import Usarios from '../../../assets/img/Admin/usuario.png'
+import VehiculoA from '../../../assets/img/Admin/VehiculoA.png'
+import VehiculoR from '../../../assets/img/Admin/vehiculoR.png'
+import Propietario from '../../../assets/img/Admin/propietario.png'
+import Conductor from '../../../assets/img/Admin/conductor.png'
 import { FcSearch } from "react-icons/fc";
+import { Link, useNavigate } from 'react-router-dom'
+import { clearAuth } from '../../../utils/auth'
 
 function UserAdmin() {
+    
+    const navigate = useNavigate();
+    const cerrarSesion = ()=>{
+        clearAuth()
+        return navigate('/')
+    }
+
     return(
         <div className="contentAdmin">
             <div className="navAdmin">
@@ -16,10 +25,10 @@ function UserAdmin() {
                         <li><a href='#' style={{
                             'text-decoration':' underline'
                         }}>Usuarios</a></li>
-                        <li><a href='#'>Conductor</a></li>
-                        <li><a href='#'>Vehiculo</a></li>
-                        <li><a href='#'>Popietario</a></li>
-                        <li><a href='#'>Cerrar Sesión</a></li>
+                        <li><Link to='/conductor-admin'>Conductor</Link></li>
+                        <li><Link to='/vehiculo-admin'>Vehiculo</Link></li>
+                        <li><Link to='/propietario-admin'>Popietario</Link></li>
+                        <li><button onClick={cerrarSesion}>Cerrar Sesión</button></li>
                     </ul>
                 </div>
             </div>
@@ -79,11 +88,13 @@ function UserAdmin() {
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Tipo de documento</th>
                                     <th>Número de documento</th>
                                     <th>Nombres</th>
                                     <th>Apellido</th>
                                     <th>Número de telefono</th>
                                     <th>Email</th>
+                                    <th>Password</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -96,6 +107,11 @@ function UserAdmin() {
                                     <td>1</td>
                                     <td>1</td>
                                     <td>1</td>
+                                    <td>1</td>
+                                    <td className='options'>
+                                        <button className='actualizar'>Actualizar</button>
+                                        <button className='inactivar'>Inactivar</button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

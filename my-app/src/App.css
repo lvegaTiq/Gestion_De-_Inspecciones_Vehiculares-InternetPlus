@@ -104,6 +104,15 @@ body{
   text-decoration: none;
   color: #333;
 }
+.navAdmin ul button{
+  background-color: #D9D9D9;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+.navAdmin ul button:hover{
+  text-decoration: underline;
+}
 .navbar ul a:hover{
   text-decoration: underline;
 }
@@ -194,4 +203,39 @@ body{
 .tablausersData table th{
   padding-right: 40px;
   border-bottom: 1px solid #333;
+}
+
+table .options{
+  padding: 0.5rem 0.5rem ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+table .options .actualizar{
+  background-color: #B3E0F2;
+  padding: 5px;
+  margin-right: 12px;
+  border-radius: 7px;
+  height: 30px;
+  border: 1px solid #F2F2F2;
+}
+
+.actualizar:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+  transition: 0.4s; 
+}
+
+table .options .inactivar{
+  background-color: #F2B3B3;
+  padding: 5px;
+  margin-right: 12px;
+  border-radius: 7px;
+  height: 30px;
+  border: 1px solid #F2F2F2;
+}
+.inactivar:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+  transition: 0.4s; 
 }

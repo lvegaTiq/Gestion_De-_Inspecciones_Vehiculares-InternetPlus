@@ -1,8 +1,8 @@
 import e from "express";
 import mongoose from "mongoose";
-import connectDB from "./config/db.js";
 import router from "./routers/usersRouters.js";
 import cors from "cors";
+import connectDB from "./config/db.js";
 
 const app = e();
 const port = process.env.PORT || 3000;
