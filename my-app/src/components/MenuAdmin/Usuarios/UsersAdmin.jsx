@@ -16,6 +16,10 @@ function UserAdmin() {
         return navigate('/')
     }
 
+    const navigate1 = ()=>{
+        navigate('/registrar-usuario')
+    }
+
     return(
         <div className="contentAdmin">
             <div className="navAdmin">
@@ -81,7 +85,7 @@ function UserAdmin() {
                         <input type="text" 
                             placeholder='🔍 Buscar usuario por ID, número de documento...'
                         />
-                            <button>Registrar</button>
+                            <button onClick={navigate1}>Registrar</button>
                     </div>
                     <div className="tablausersData">
                         <table>

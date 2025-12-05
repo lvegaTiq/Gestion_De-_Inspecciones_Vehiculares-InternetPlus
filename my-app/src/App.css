@@ -157,21 +157,30 @@ body{
   padding: 1rem 6.5rem;
   justify-content: space-between;
 }
+
 .textBarraBusqueda{
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-} 
+}
+
 .textBarraBusqueda h4{
   font-size: 26px;
   color: aliceblue;
 }
+
 .barrabusqueda button{
   padding: 9px 20px;
   border-radius: 7px;
   background-color: #B3E0F2;
   border: 1px solid aliceblue;
+}
+
+.barrabusqueda button:hover{
+  transition: 0.7s;
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 
@@ -238,4 +247,43 @@ table .options .inactivar{
   transform: scale(1.1);
   cursor: pointer;
   transition: 0.4s; 
+}
+
+/* registers*/
+.contentAdmin2{
+  height: 82%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contentAdmin2 .registerUser{
+  background-color: tomato;
+  width: 50%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contentAdmin2 .registerUser img{
+  width: 10%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.registerUser .contenedorFormulario{
+  background-color: aqua;
+  height: 20rem;
+  display: flex;
+}
+
+.contenedorFormulario .input1{
+  display: flex;
+  width: 50%;
+  background-color: #B3E0F2;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem 2rem;
+}
+.input1 input, select{
+  height: 10%;
 }
