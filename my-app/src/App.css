@@ -251,39 +251,183 @@ table .options .inactivar{
 
 /* registers*/
 .contentAdmin2{
-  height: 82%;
+  height: 84%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .contentAdmin2 .registerUser{
-  background-color: tomato;
+  background-color: #F2F2F2;
+  border-radius: 7px;
   width: 50%;
   height: 80%;
   display: flex;
   flex-direction: column;
+  padding: 1rem 2rem;
 }
 
-.contentAdmin2 .registerUser img{
+.contentAdmin2 .registerUser .img1{
   width: 10%;
   margin-left: auto;
   margin-right: auto;
 }
+.contentAdmin2 .registerUser1 .img1{
+  width: 20%;
+  margin-left: auto;
+  margin-right: auto;
+}
 .registerUser .contenedorFormulario{
-  background-color: aqua;
-  height: 20rem;
+  height: 25rem;
   display: flex;
+}
+
+.registerUser1 .contenedorFormulario1{
+  height: 25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center ;
+}
+
+.contentAdmin2 .registerUser1{
+  background-color: #F2F2F2;
+  border-radius: 7px;
+  width: 25%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
 }
 
 .contenedorFormulario .input1{
   display: flex;
   width: 50%;
-  background-color: #B3E0F2;
   flex-direction: column;
   justify-content: center;
   padding: 1rem 2rem;
 }
+
+.contenedorFormulario1 .input1{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem 2rem;
+}
+
+.contenedorFormulario1 .input1 input, select{
+  padding: 3%;
+}
+
 .input1 input, select{
   height: 10%;
+  border: 1px solid #333;
+  border-radius: 7px;
+  margin-bottom: 12px;
+  padding-left: 5px;
+}
+
+.input1 select option{
+  background-color: #F2F2F2;
+}
+
+/*boton de adjuntar archivos*/
+.file-btn{
+  width: 100%;
+  height: 30%;
+  font-size: 18px;
+  font-weight: 500;
+  display:  flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  color: #82C0D9;
+  background-color: #fff;
+  border: 1.5px dashed #82C0D9;
+  border-radius:  20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.file-btn:hover{
+  color: #82C0D9;
+  background-color: #fff;
+}
+
+.file-btn span{
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  color: #82C0D9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25px;
+  background-color: #fff;
+}
+
+.select-file{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  margin-top: 20px;
+}
+
+.select-file p{
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 15px;
+}
+
+.select-file button{
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #82C0D9;
+  background-color: transparent;
+  border:  none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.select-file button:hover{
+  color: #fff;
+  background-color: #82C0D9;
+
+}
+.preview-container{
+   display:flex;
+   flex-direction:column;
+   align-items:center;
+   overflow-y: scroll;
+   height:100px;
+}
+
+.preview-img{
+   width: 100%;
+   object-fit:cover;
+   border-radius:10px;
+   border:2px solid #ccc;
+}
+
+.buttonregister{
+  margin-left: 44%;
+  height: 12%;
+  background-color: #B3E0F2;
+  width: 17%;
+  border: 1px solid #F2F2F2;
+  border-radius: 7px;
+}
+
+.buttonregister:hover{
+  transition: .5s;
+  transform: scale(0.95);
+  cursor: pointer;
 }

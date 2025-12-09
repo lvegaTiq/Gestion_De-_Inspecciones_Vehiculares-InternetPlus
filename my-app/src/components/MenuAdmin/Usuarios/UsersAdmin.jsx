@@ -85,7 +85,7 @@ function UserAdmin() {
                         <input type="text" 
                             placeholder='🔍 Buscar usuario por ID, número de documento...'
                         />
-                            <button onClick={navigate1}>Registrar</button>
+                        <button onClick={navigate1}>Registrar</button>
                     </div>
                     <div className="tablausersData">
                         <table>

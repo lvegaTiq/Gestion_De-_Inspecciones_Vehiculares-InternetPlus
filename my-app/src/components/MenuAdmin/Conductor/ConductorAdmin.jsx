@@ -8,6 +8,11 @@ function ConductorAdmin() {
         clearAuth()
         return navigate('/')
     }
+    
+    const registrarConductor = ()=>{
+        navigate('/registrar-conductor');
+    }
+    
     return(
         <div className="contentAdmin">
             <div className="navAdmin">
@@ -33,7 +38,7 @@ function ConductorAdmin() {
                         <input type="text" 
                             placeholder='🔍 Buscar usuario por ID, número de documento...'
                         />
-                            <button>Registrar</button>
+                            <button onClick={registrarConductor}>Registrar</button>
                     </div>
                     <div className="tablausersData">
                         <table>

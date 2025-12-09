@@ -17,7 +17,6 @@ const UserSchema = new mongoose.Schema({
     },
     documento: {
         type: String,
-        unique: true,
         required: true
     },
 

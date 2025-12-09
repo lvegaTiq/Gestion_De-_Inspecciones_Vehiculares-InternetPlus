@@ -3,7 +3,7 @@ import logo from '../../../assets/img/logo/LogoSinFondo.png'
 import { clearAuth } from '../../../utils/auth';
 import vehiculo from '../../../assets/img/Admin/VehiculoA.png'
 
-function RegistrarVehiculo() {
+function ActualizarVehiculo() {
     const navigate = useNavigate();
     const cerrarSesion = ()=>{
         clearAuth()
@@ -52,4 +52,4 @@ function RegistrarVehiculo() {
     )
 }
 
-export default RegistrarVehiculo
+export default ActualizarVehiculo

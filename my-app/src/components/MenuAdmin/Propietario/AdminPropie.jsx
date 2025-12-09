@@ -10,6 +10,10 @@ function AdminPropietario() {
         return navigate('/')
     }
 
+    const propietarioRegister = ()=>{
+        navigate('/registrar-propietario')
+    }
+
     return(
         <div className="contentAdmin">
             <div className="navAdmin">
@@ -30,12 +34,12 @@ function AdminPropietario() {
                 <div className="tablausers">
                     <div className="barrabusqueda">
                         <div className="textBarraBusqueda">
-                            <h4>Propietarios</h4>
+                            <h4>Usuarios</h4>
                         </div>
                         <input type="text" 
                             placeholder='🔍 Buscar usuario por ID, número de documento...'
                         />
-                            <button>Registrar</button>
+                        <button onClick={propietarioRegister}>Registrar</button>
                     </div>
                     <div className="tablausersData">
                         <table>

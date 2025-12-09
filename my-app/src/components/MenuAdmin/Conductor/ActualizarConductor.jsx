@@ -7,7 +7,7 @@ import { MdDelete } from "react-icons/md";
 import { LuUpload } from "react-icons/lu";
 
 
-function RegistrarConductor() {
+function ActualizarConductor() {
     const navigate = useNavigate();
     const cerrarSesion = ()=>{
         clearAuth()
@@ -122,4 +122,4 @@ function RegistrarConductor() {
     )
 }
 
-export default RegistrarConductor
+export default ActualizarConductor

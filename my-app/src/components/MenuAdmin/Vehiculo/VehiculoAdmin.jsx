@@ -9,6 +9,10 @@ function VehiculoAdmin() {
         return navigate('/')
     }
 
+    const registervehiculo = () => {
+        navigate('/registrar-vehiculo');
+    }
+
     return(
         <div className="contentAdmin">
             <div className="navAdmin">
@@ -34,7 +38,7 @@ function VehiculoAdmin() {
                         <input type="text" 
                             placeholder='🔍 Buscar usuario por ID, número de documento...'
                         />
-                            <button>Registrar</button>
+                            <button onClick={registervehiculo}>Registrar</button>
                     </div>
                     <div className="tablausersData">
                         <table>

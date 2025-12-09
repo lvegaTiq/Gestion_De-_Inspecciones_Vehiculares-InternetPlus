@@ -3,7 +3,7 @@ import { clearAuth } from "../../../utils/auth";
 import logo from '../../../assets/img/logo/LogoSinFondo.png'
 import user from '../../../assets/img/Admin/usuario.png'
 
-  function RegistrarUsuario() {
+  function ActualizarUsuario() {
       const navigate = useNavigate();
       const cerrarSesion = ()=>{
           clearAuth()
@@ -66,4 +66,4 @@ import user from '../../../assets/img/Admin/usuario.png'
     )
   }
 
-  export default RegistrarUsuario
+  export default ActualizarUsuario

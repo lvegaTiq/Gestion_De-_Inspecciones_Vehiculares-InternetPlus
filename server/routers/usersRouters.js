@@ -1,5 +1,5 @@
 import e from 'express';
-import { getData, create } from '../Controllers/Users.js';
+import { create, getData } from '../controllers/users/Users.js';
 
 const router = e.Router();
 

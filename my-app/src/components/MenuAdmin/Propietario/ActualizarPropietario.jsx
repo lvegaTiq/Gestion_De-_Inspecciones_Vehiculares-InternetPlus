@@ -2,7 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { clearAuth } from "../../../utils/auth";
 import logo from '../../../assets/img/logo/LogoSinFondo.png'
 import propietatio from '../../../assets/img/Admin/propietario.png'
-function RegistrarPropietario() {
+
+
+function ActualizarPropietario() {
     const navigate = useNavigate();
     const cerrarSesion = ()=>{
         clearAuth()
@@ -58,4 +60,4 @@ function RegistrarPropietario() {
     )
 }
 
-export default RegistrarPropietario
+export default ActualizarPropietario

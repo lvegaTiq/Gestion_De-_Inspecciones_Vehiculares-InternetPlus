@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import user from '../Models/users.js'
+import user from '../../Models/users.js'
 
 export const getData = async(req, res )=>{
     try{
@@ -36,6 +36,7 @@ export const create = async(req, res)=>{
           });
         }
 
+
         const {nombre, apellido, tipoDocumento, documento, email, telefono, password, role} = req.body;
         const existingUser = await user.findOne({$or: [{email}, {documento}]}); 
 
@@ -45,6 +46,13 @@ export const create = async(req, res)=>{
                 message: "El usuario ya existe en la base de datos"
             })
         }
+        if (!documento || documento.trim() === "") {
+          return res.status(400).json({
+            success: false,
+            message: "Documento obligatorio"
+          });
+        }
+
 
         const newUser = new user({
             nombre,

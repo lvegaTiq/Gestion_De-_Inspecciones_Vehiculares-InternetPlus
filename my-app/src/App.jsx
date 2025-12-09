@@ -37,7 +37,7 @@ function App() {
           </PrivateRouter>
         } />
         
-        <Route path='/rigistrar-conductor' element = {
+        <Route path='/registrar-conductor' element = {
           <PrivateRouter allowedRoles={['Admin']}>
             <RegistrarConductor />
           </PrivateRouter>
