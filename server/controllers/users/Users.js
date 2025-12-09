@@ -14,7 +14,7 @@ export const getData = async(req, res )=>{
 
         res.status(200).json({
             success: true,
-            data:users
+            data: users
         })
     }catch(error){
         res.status(500).json({

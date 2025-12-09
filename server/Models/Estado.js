@@ -4,145 +4,211 @@ import mongoosePaginate from "mongoose-paginate-v2"
 const EstadoVehiculoSchema = new mongoose.Schema({
     FechaEstado: {
         type: Date,
-        require: true
+        required: true
     },
     kilometraje: {
         type: Number,
-        require: true
+        required: true
     },
     Nivel:[
         {
             limpiavidrios: {
-                type:Boolean
+                type:Boolean,
+                default: false
             },
             AceiteMotor: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             LiquidoFrenos: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             LiquidoRefrigerante: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             NivelLiquidoHidraulico: {
-                type: Boolean
+                type: Boolean,
+                default: false
             }
         }
     ],
     pedal:[
         {
             frenos:{
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             Acelerador:{
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             clutsh: {
-                type: Boolean
-            }
+                type: Boolean,
+                default: false
+            },
+            barras: {
+                type:Boolean,
+                default: false
+            },
+            amortiguadores: {
+                type:Boolean,
+                default: false
+            },
+            Casco_visera: {
+                type:Boolean,
+                default: false
+            },
+            sillin: {
+                type:Boolean,
+                default: false
+            },
+            Posapies: {
+                type:Boolean,
+                default: false
+            },
         }
     ],
     Luz: [
         {
             Direccional: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             luces: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             lucesInternas:{
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             estacionarias: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             stops: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             testigos: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             LuzReversa:{
-                type: Boolean
+                type: Boolean,
+                default: false
             }
         }
     ],
     botiquin: [
         {
             extintor: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             fechaVencimiento: {
                 type: Date
             },
             llantaRepuesto: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             CrucetaAcordePernos: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             Señales: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             tacos: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             cajaHerramientas: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             linterna: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             gato: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             botiquinPrimerosAuxilios: {
-                type: Boolean
+                type: Boolean,
+                default: false
             }
         }
     ],
     varios : [
         {
             bateria: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             llantas: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             rines: {
-                type: Boolean
+                type: Boolean,
+                default: false
             }, 
             cinturonSeguridad: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             pitoReversa: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             pito: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             frenoEmergencia: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             Espejos: {
-                type: Boolean
+                type: Boolean,
+                default: false
+            },
+            espejosLaterales: {
+                type:Boolean,
+                default: false
             },
             EstadoCarcasaLuces: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             limpiaparabrisas: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             tapizado: {
-                type: Boolean
+                type: Boolean,
+                default: false
             },
             panoramico: {
-                type: Boolean
+                type: Boolean,
+                default: false
             }
         }
     ],
     Observacion: {
-        type: String
+        type: String,
+        default:""
+    },
+    Vehiculo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "vehiculo",
+        required: true,
     }
 })
 

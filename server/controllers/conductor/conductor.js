@@ -1,4 +1,5 @@
-import conductor from '../../Models/conductor.js'
+import { populate } from 'dotenv';
+import Conductor from '../../Models/conductor.js'
 
 export const getDataConductor = async(req, res)=>{
     try{
@@ -7,13 +8,13 @@ export const getDataConductor = async(req, res)=>{
         const options = {
             page: parseInt(page),
             limit: parseInt(limit), 
-            sort: { createdAt: -1}
+            sort: { createdAt: -1},
         }
 
-        const conductor = await conductor.paginate({}, options);
+        const resultado = await Conductor.paginate({}, options);
         res.status(200).json({
             success: true,
-            data:conductor
+            data: resultado
         })
     }catch(error){
         res.status(500).json({
@@ -33,8 +34,47 @@ export const postDataConductor= async(req,res)=>{
           });
         }
 
-        const {nombre, apellido, tipoDocumento, numDoc, numTel, licencia} = req.body
-    }catch(error){
+        const {
+            nombre, 
+            apellido, 
+            tipoDocumento, 
+            numDoc, 
+            numTel
+        } = req.body
 
+        let licenciaPath = null
+        if(req.file){
+            licenciaPath = `/uploads/conductores/${req.file.filename}`
+        }
+        const existingConductor = await conductor.findOne({$or: [{numDoc}]})
+
+        if(existingConductor){
+            res.status(500).json({
+                message: `Este conductor con documento ${numDoc} ya existe`
+            })
+        }
+
+        const newConductor = new conductor({
+            nombre,
+            apellido,
+            tipoDocumento,
+            numDoc,
+            numTel,
+            licencia: licenciaPath
+        })
+
+        await newConductor.save()
+
+        res.status(200).json({
+            succes: true,
+            message: `Conductor creado exitosamente`,
+            data: newConductor
+        })
+    }catch(error){
+        re.status(500).json({
+            succes: false,
+            message: 'No se pudo crear el conductor',
+            error: error.message
+        })
     }
 }

@@ -1,25 +1,51 @@
 import mongoose from "mongoose";
-import mongoosePaginate from 'mongoose-paginate-v2';
+import mongoosePaginate from "mongoose-paginate-v2";
 
-const vehiculoSchema = new mongoose.Schema({
-    TipoVehiculo: {
-        type: String
+const vehiculoSchema = new mongoose.Schema(
+  {
+    tipoVehiculo: {
+      type: String,
+      enum: [ 'Carro', 'Moto']
     },
     placa: {
-        type: String
+      type: String,
+      required: true,
+      unique: true,
     },
-    Modelo: {
-        type: String
+    modelo: {
+      type: String,
     },
-    FechaSoat: {
-        type: Date,
-        require: true
+    fechaSoat: {
+      type: Date,
+      required: true,
     },
-    FechaTecno: {
-        type: Date,
-        require: true
+    fechaTecno: {
+      type: Date,
+      required: true,
+    },
+
+    propietario: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "propietario",
+      required: true,
+    },
+
+    conductor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "conductor",
+      required: true,
+    },
+    estado: {
+        type: String,
+        enum: ['Buen estado', 'Mal estado', 'Pendiente'],   
+        required: true,
+        default: 'Pendiente'
     }
-})
+  },
+  {
+    timestamps: true,
+  }
+);
 
 vehiculoSchema.plugin(mongoosePaginate);
-export default mongoose.model('vehiculo', vehiculoSchema);
+export default mongoose.model("vehiculo", vehiculoSchema);

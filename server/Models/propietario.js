@@ -2,24 +2,24 @@ import mongoose, { mongo } from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2"
 
 const propietarioSchema= new mongoose.Schema({
-    Nombre:{
+    nombre:{
         type: String,
         require: true
     },
-    Apellido: {
+    apellido: {
         type:String,
         require:true
     },
-    TipoDoc: {
+    tipoDoc: {
         type: String,
         enum: ['Cedula de ciudadania', 'Cedula de extranjería', 'Pasaporte'],
         require: true
     },
-    NumDoc: {
+    numDoc: {
         type: Number,
         require: true
     },
-    NumTel: {
+    numTel: {
         type: Number,
         require: true
     }
