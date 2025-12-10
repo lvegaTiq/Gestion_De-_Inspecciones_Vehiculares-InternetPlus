@@ -22,6 +22,11 @@ const propietarioSchema= new mongoose.Schema({
     numTel: {
         type: Number,
         require: true
+    },
+    estado: {
+        type: String,
+        enum: ['Activo', 'Inactivo'],
+        required: true
     }
 })
 

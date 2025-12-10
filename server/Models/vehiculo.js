@@ -29,12 +29,17 @@ const vehiculoSchema = new mongoose.Schema(
       ref: "propietario",
       required: true,
     },
-
     conductor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "conductor",
       required: true,
     },
+    estadoVehiculo: {
+      type: String,
+      enum: ['Activo', 'Inactivo'],
+      required: true
+    }
+    ,
     estado: {
         type: String,
         enum: ['Buen estado', 'Mal estado', 'Pendiente'],   

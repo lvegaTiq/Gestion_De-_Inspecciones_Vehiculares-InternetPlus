@@ -19,7 +19,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-
     email: {
         type:String,
         unique:true,
@@ -28,6 +27,11 @@ const UserSchema = new mongoose.Schema({
     telefono: {
         type:Number,
         required: true
+    },
+    estado: {
+        type: String,
+        enum: ['Activo', "inactivo"],
+        default: 'Activo'
     },
     password: {
         type: String,

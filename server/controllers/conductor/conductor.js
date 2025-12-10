@@ -39,7 +39,8 @@ export const postDataConductor= async(req,res)=>{
             apellido, 
             tipoDocumento, 
             numDoc, 
-            numTel
+            numTel,
+            estado
         } = req.body
 
         let licenciaPath = null
@@ -60,7 +61,8 @@ export const postDataConductor= async(req,res)=>{
             tipoDocumento,
             numDoc,
             numTel,
-            licencia: licenciaPath
+            licencia: licenciaPath,
+            estado
         })
 
         await newConductor.save()
@@ -76,5 +78,21 @@ export const postDataConductor= async(req,res)=>{
             message: 'No se pudo crear el conductor',
             error: error.message
         })
+    }
+}
+
+export const uploadDataConductor = async(req, res)=>{
+    try{
+
+    }catch(error){
+
+    }
+}
+
+export const InactivarDataConductor = async(req, res)=>{
+    try{
+
+    }catch(error){
+        
     }
 }

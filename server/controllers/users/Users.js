@@ -37,7 +37,7 @@ export const create = async(req, res)=>{
         }
 
 
-        const {nombre, apellido, tipoDocumento, documento, email, telefono, password, role} = req.body;
+        const {nombre, apellido, tipoDocumento, documento, email, estado, telefono, password, role} = req.body;
         const existingUser = await user.findOne({$or: [{email}, {documento}]}); 
 
         if(existingUser){
@@ -60,6 +60,7 @@ export const create = async(req, res)=>{
             tipoDocumento,
             documento,
             email,
+            estado,
             telefono,
             password,
             role
@@ -76,6 +77,109 @@ export const create = async(req, res)=>{
             success: false,
             message: 'El usuario no se pudo crear',
             error: error.message
+        })
+    }
+}
+
+export const actualizar = async(req, res) =>{
+    try{
+        const { id } = req.params;
+        const {
+            nombre,
+            apellido,
+            tipoDocumento,
+            documento,
+            email,
+            estado,
+            telefono,
+            password,
+            role
+        } = req.body
+
+        const dataupdate = {}
+        if(nombre){
+            dataupdate.nombre = nombre
+        }
+        if(apellido){
+            dataupdate.apellido = apellido
+        }
+        if(tipoDocumento){
+            dataupdate.tipoDocumento = tipoDocumento
+        }
+        if(documento){
+            dataupdate.documento = documento
+        }
+        if(email){
+            dataupdate.email = email
+        }
+        if(estado){
+            dataupdate.estado = estado
+        }
+        if(telefono){
+            dataupdate.telefono = telefono
+        }
+        if(password){
+            dataupdate.password = password
+        }
+        if(role){
+            dataupdate.role = role
+        }
+
+        const usuarioActualizar = await user.findByIdAndUpdate(
+            id,
+            dataupdate,
+            {new: true}
+        )
+
+        if(!usuarioActualizar){
+            return res.status(404).json({
+                success: false,
+                message: 'Propioetario no encontrado'
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Usuario actualizado correctamente',
+            data: usuarioActualizar   
+        })
+
+    }catch(error){
+        return res.status(500).json({
+            success: false,
+            message: `Error al momento de actualizar los datos`,
+            error: error.message
+        })
+    }
+} 
+
+export const inactivarUsuario = async(req,res)=>{
+    try{
+        const {id} = req.params;
+        const  {estado} = req.body
+        const actualizarUser = await user.findByIdAndUpdate(
+            id,
+            {estado: estado},
+            {new: true}
+        )
+
+        if(!actualizarUser){
+            return res.status(404).json({
+                success: false,
+                message: 'Usuario no encontrado'
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Cambio de estado exitoso',
+            data: actualizarUser
+        })
+
+    }catch(error){
+        return res.status(500).json({
+            success: false,
+            message: `No se pudo inactivar el usuario `
         })
     }
 }

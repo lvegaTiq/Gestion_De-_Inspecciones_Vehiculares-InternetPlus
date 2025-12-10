@@ -124,3 +124,10 @@ export const CambioEstadoVehiculo = async(req, res)=>{
         })
     }
 }
+export const uploadDataPropietario = async(req, res)=>{
+    try{
+
+    }catch(error){
+
+    }
+}

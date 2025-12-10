@@ -27,7 +27,7 @@ export const getDataPropietario = async(req, res) =>{
 
 export const postDataPropietario = async(req, res) => {
     try{
-        const {nombre, apellido, tipoDoc, numDoc, numTel} = req.body
+        const {nombre, apellido, tipoDoc, numDoc, numTel, estado} = req.body
         const existinPropietario = await propietario.findOne({$or: [{numDoc}]})
         if(existinPropietario){
             res.status(404).json({
@@ -41,7 +41,8 @@ export const postDataPropietario = async(req, res) => {
             apellido,
             tipoDoc,
             numDoc,
-            numTel
+            numTel,
+            estado
         })
 
         await nuevoPropietario.save();
@@ -57,5 +58,21 @@ export const postDataPropietario = async(req, res) => {
             message: 'No se puede consultar el propietario',
             error: error.message
         })
+    }
+}
+
+export const uploadDataPropietario = async(req, res)=>{
+    try{
+
+    }catch(error){
+
+    }
+}
+
+export const InactivarDataPropietario = async(req, res)=>{
+    try{
+
+    }catch(error){
+        
     }
 }

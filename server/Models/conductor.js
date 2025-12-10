@@ -24,6 +24,11 @@ const conductorScheme = new mongoose.Schema({
     licencia: {
         type: String,
         default: null
+    },
+    estado: {
+        type: String,
+        enum: ['Activo', 'Inactivo'],
+        required: true
     }
 })
 
