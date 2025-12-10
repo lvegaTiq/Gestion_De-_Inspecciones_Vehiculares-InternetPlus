@@ -23,7 +23,6 @@ const vehiculoSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-
     propietario: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "propietario",
@@ -38,8 +37,7 @@ const vehiculoSchema = new mongoose.Schema(
       type: String,
       enum: ['Activo', 'Inactivo'],
       required: true
-    }
-    ,
+    },
     estado: {
         type: String,
         enum: ['Buen estado', 'Mal estado', 'Pendiente'],   

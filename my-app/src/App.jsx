@@ -11,6 +11,7 @@ import RegistrarConductor from './components/MenuAdmin/Conductor/RegistrarConduc
 import RegistrarVehiculo from './components/MenuAdmin/Vehiculo/RegistrarVehiculo'
 import RegistrarPropietario from './components/MenuAdmin/Propietario/RegistrarPropietario'
 import RegistrarUsuario from './components/MenuAdmin/Usuarios/RegistrarUser'
+import RegistroEstado from './components/MenuSupervisor/RegistroEstado'
 
 function App() {
 
@@ -69,12 +70,17 @@ function App() {
             <RegistrarPropietario />
           </PrivateRouter>
         } />
-        
 
         {/*Rutas supervisor */}
         <Route path='/menu-supervisor' element={
           <PrivateRouter allowedRoles={['Supervisor']}>
             <ControlDeEstado />
+          </PrivateRouter>
+        } />
+
+        <Route path='/registro-estado' element={
+          <PrivateRouter allowedRoles={['Supervisor']}>
+            <RegistroEstado />
           </PrivateRouter>
         } />
       </Routes>

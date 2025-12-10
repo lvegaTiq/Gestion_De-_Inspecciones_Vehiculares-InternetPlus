@@ -37,7 +37,7 @@ export const postDataVehiculo = async (req, res) => {
       fechaTecno,
       propietarioId,
       conductorId,
-      estado
+      estado,
     } = req.body;
 
     const exitingVehiculo = Vehiculo.findOne({$or:[{placa}]});
@@ -63,7 +63,8 @@ export const postDataVehiculo = async (req, res) => {
       fechaTecno,
       propietario: propietarioId,
       conductor: conductorId,
-      estado
+      estado,
+      estadoVehiculo: 'Activo'
     });
 
     await nuevoVehiculo.save();
@@ -81,6 +82,63 @@ export const postDataVehiculo = async (req, res) => {
     });
   }
 };
+
+export const updateVehiculo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      tipoVehiculo,
+      placa,
+      modelo,
+      fechaSoat,
+      fechaTecno,
+      propietarioId,
+      conductorId,
+      estado,
+      estadoVehiculo,
+    } = req.body;
+
+    const dataToUpdate = {};
+
+    if (tipoVehiculo) dataToUpdate.tipoVehiculo = tipoVehiculo;
+    if (placa) dataToUpdate.placa = placa;
+    if (modelo) dataToUpdate.modelo = modelo;
+    if (fechaSoat) dataToUpdate.fechaSoat = fechaSoat;
+    if (fechaTecno) dataToUpdate.fechaTecno = fechaTecno;
+    if (propietarioId) dataToUpdate.propietario = propietarioId;
+    if (conductorId) dataToUpdate.conductor = conductorId;
+    if (estado) dataToUpdate.estado = estado;
+    if (estadoVehiculo) dataToUpdate.estadoVehiculo = estadoVehiculo;
+
+    const vehiculoActualizado = await Vehiculo.findByIdAndUpdate(
+      id,
+      dataToUpdate,
+      { new: true }
+    )
+      .populate("propietario")
+      .populate("conductor");
+
+    if (!vehiculoActualizado) {
+      return res.status(404).json({
+        success: false,
+        message: "Vehículo no encontrado",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Vehículo actualizado correctamente",
+      data: vehiculoActualizado,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error al actualizar el vehículo",
+      error: error.message,
+    });
+  }
+};
+
 
 export const CambioEstadoVehiculo = async(req, res)=>{
     try{
@@ -124,10 +182,39 @@ export const CambioEstadoVehiculo = async(req, res)=>{
         })
     }
 }
-export const uploadDataPropietario = async(req, res)=>{
-    try{
 
-    }catch(error){
 
+
+export const activarVehiculo = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { estado } = req.body; 
+
+    const vehiculo = await Vehiculo.findByIdAndUpdate(
+      id,
+      { estadoVehiculo: estado },
+      { new: true }
+    )
+      .populate("propietario")
+      .populate("conductor");
+
+    if (!vehiculo) {
+      return res.status(404).json({
+        success: false,
+        message: "Vehículo no encontrado",
+      });
     }
-}
+
+    return res.status(200).json({
+      success: true,
+      message: "Vehículo activado correctamente",
+      data: vehiculo,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Error al activar el vehículo",
+      error: error.message,
+    });
+  }
+};
