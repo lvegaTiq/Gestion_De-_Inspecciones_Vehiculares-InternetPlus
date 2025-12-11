@@ -78,7 +78,7 @@ function App() {
           </PrivateRouter>
         } />
 
-        <Route path='/registro-estado' element={
+        <Route path='/registro-estado/:id' element={
           <PrivateRouter allowedRoles={['Supervisor']}>
             <RegistroEstado />
           </PrivateRouter>
