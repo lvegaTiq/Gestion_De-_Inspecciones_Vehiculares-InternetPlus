@@ -17,6 +17,11 @@ function UserAdmin() {
     const [malEstado, setMalEstado] = useState(0);
     const navigate = useNavigate();
     const [search, setSearch] = useState("")
+    const [errorMsg, setErrorMsg] = useState("");
+    const [showModal, setShowModal] = useState(false);
+    const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
+    const [nuevoEstado, setNuevoEstado] = useState("");
+
     const cerrarSesion = ()=>{
         clearAuth()
         return navigate('/')
@@ -115,6 +120,40 @@ function UserAdmin() {
         item.estado.toLowerCase().includes(text)
       );
     });
+
+    const ejecutarCambioEstado = async () => {
+      if (!usuarioSeleccionado) return;
+    
+      try {
+        const resp = await fetch(`http://localhost:3000/api/users-inactivar/${usuarioSeleccionado._id}`,{
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ estado: nuevoEstado }),
+          }
+        );
+      
+        if (!resp.ok) {
+          const errorData = await resp.json().catch(() => ({}));
+          throw new Error(errorData.message || "Error al cambiar estado");
+        }
+      
+        const result = await resp.json();
+      
+        setUsers((prev) =>
+          prev.map((u) =>
+            u._id === usuarioSeleccionado._id
+              ? { ...u, estado: result.data?.estado || nuevoEstado }
+              : u
+          )
+        );
+      
+        setShowModal(false);
+      } catch (error) {
+        console.error(error);
+        setErrorMsg(error.message || "Error al cambiar el estado.");
+      }
+    };
+
     return(
         <div className="contentAdmin">
             <div className="navAdmin">
@@ -189,7 +228,6 @@ function UserAdmin() {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Tipo de documento</th>
                                     <th>Número de documento</th>
                                     <th>Nombres</th>
@@ -205,7 +243,6 @@ function UserAdmin() {
                                 {usuariofiltrado.length > 0 ? (
                                   usuariofiltrado.map((item) => (
                                     <tr key={item._id}>
-                                      <td>{item._id}</td>
                                       <td>{item.tipoDocumento}</td>
                                       <td>{item.documento}</td>
                                       <td>{item.nombre}</td>
@@ -215,8 +252,23 @@ function UserAdmin() {
                                       <td>{item.password}</td>
                                       <td>{item.estado}</td>
                                       <td className='options'>
-                                        <button className='actualizar'>Actualizar</button>
-                                        <button className='inactivar'>Inactivar</button>
+                                        <Link to={`/actualizar-usuario/${item._id}`} className='actualizar'>Actualizar</Link>
+                                        <button
+                                          className='inactivar'
+                                          type="button"
+                                          onClick={()=>{
+                                            const estadoNuevo = item.estado === "Activo" ? "Inactivo" : "Activo";
+                                            setUsuarioSeleccionado(item);
+                                            setNuevoEstado(estadoNuevo);
+                                            setShowModal(true);
+                                          }}
+                                        >
+                                          {item.estado === "Activo" ? "Inactivar" : "Activar"}
+                                        </button>
+
+                                        {errorMsg && (
+                                          <p style={{ color: "red", margin: "0.5rem 0" }}>{errorMsg}</p>
+                                        )}
                                       </td>
                                     </tr>
                                   ))
@@ -230,7 +282,30 @@ function UserAdmin() {
                     </div>
                 </div>
             </div>
+            {showModal && (
+              <div className="modal-overlay">
+                <div className="modal">
+                  <h3>Cambiar estado del usuario</h3>
+                  <p>
+                    ¿Seguro que deseas cambiar el estado de  
+                    <strong> {usuarioSeleccionado?.nombre} {usuarioSeleccionado?.apellido} </strong> 
+                    a <strong>{nuevoEstado}</strong>?
+                  </p>
+                        
+                  <div className="modal-buttons">
+                    <button className="btn-confirm" onClick={ejecutarCambioEstado}>
+                      Confirmar
+                    </button>
+                    <button className="btn-cancel" onClick={() => setShowModal(false)}>
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
        </div>
+       
     )
 }
 

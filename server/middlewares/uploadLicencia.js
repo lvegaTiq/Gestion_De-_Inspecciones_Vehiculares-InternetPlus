@@ -16,10 +16,21 @@ const storage = multer.diskStorage({
         cb(null, uploadPath);
     },
     filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        const unique = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, unique + ext);
+      const originalName = file.originalname;
+      const ext = path.extname(originalName);
+      const base = path.basename(originalName, ext);
+
+      let finalName = originalName;
+      let counter = 1;
+
+      while (fs.existsSync(path.join(uploadPath, finalName))) {
+        finalName = `${base}(${counter})${ext}`;
+        counter++;
+      }
+
+      cb(null, finalName);
     }
+
 });
 
 const fileFilter = (req, file, cb) => {

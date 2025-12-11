@@ -16,9 +16,7 @@ function ControlDeEstado() {
   useEffect(() => {
     const fetchVehiculos = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:3000/api/vehiculo-get",
-          {
+        const response = await fetch("http://localhost:3000/api/vehiculo-get",{
             method: "GET",
             headers: {
               "Content-Type": "application/json",

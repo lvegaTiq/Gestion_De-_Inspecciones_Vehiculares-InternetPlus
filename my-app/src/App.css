@@ -69,7 +69,6 @@ body{
   transform: scale(1.01);
 }
 
-/*Estilos menu admin*/
 .contentAdmin{
   background-color: #33333369;
   width: 100%;
@@ -264,87 +263,137 @@ table .options .inactivar{
   transition: 0.4s; 
 }
 
-/* registers*/
-.contentAdmin2{
-  height: 84%;
+/* register*/
+.contentAdmin2 {
+  min-height: 84%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;               
+  box-sizing: border-box;
 }
 
-.contentAdmin2 .registerUser{
+.contentAdmin2 .registerUser {
   background-color: #F2F2F2;
   border-radius: 7px;
-  width: 50%;
-  height: 80%;
+  width: 100%;                
+  max-width: 900px;
   display: flex;
   flex-direction: column;
-  padding: 1rem 2rem;
+  padding: 1.5rem 2rem;
+  box-sizing: border-box;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
 }
 
-.contentAdmin2 .registerUser .img1{
-  width: 10%;
+.contentAdmin2 .registerUser .img1 {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
   margin-left: auto;
   margin-right: auto;
-}
-.contentAdmin2 .registerUser1 .img1{
-  width: 20%;
-  margin-left: auto;
-  margin-right: auto;
-}
-.registerUser .contenedorFormulario{
-  height: 25rem;
-  display: flex;
+  margin-bottom: 1rem;
 }
 
-.registerUser1 .contenedorFormulario1{
-  height: 25rem;
+.registerUser .contenedorFormulario {
   display: flex;
-  justify-content: center;
-  align-items: center ;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.contentAdmin2 .registerUser1{
-  background-color: #F2F2F2;
-  border-radius: 7px;
-  width: 25%;
-  height: 80%;
+.contenedorFormulario .input1 {
   display: flex;
-  flex-direction: column;
-  padding: 1rem 2rem;
-}
-
-.contenedorFormulario .input1{
-  display: flex;
-  width: 50%;
+  flex: 1; 
   flex-direction: column;
   justify-content: center;
-  padding: 1rem 2rem;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
-.contenedorFormulario1 .input1{
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  padding: 1rem 2rem;
-}
-
-.contenedorFormulario1 .input1 input, select{
-  padding: 3%;
-}
-
-.input1 input, select{
-  height: 10%;
+.input1 input,
+.input1 select {
   border: 1px solid #333;
   border-radius: 7px;
   margin-bottom: 12px;
-  padding-left: 5px;
+  padding: 0.45rem 0.5rem;
+  font-size: 0.95rem;
 }
 
-.input1 select option{
+.contenedorFormulario1 .input1 input,
+.contenedorFormulario1 .input1 select {
+  padding: 3%;
+}
+
+.input1 select option {
   background-color: #F2F2F2;
 }
+
+.buttonregister {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 7px;
+  border: none;
+  background-color: #007bff;
+  color: #333;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.buttonregister:hover {
+  background-color: #0063cc;
+  color: #fff;
+}
+
+@media (max-width: 992px) {
+  .contentAdmin2 .registerUser {
+    padding: 1.5rem;
+  }
+
+  .registerUser .contenedorFormulario {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contentAdmin2 {
+    padding: 0.5rem;
+  }
+
+  .contentAdmin2 .registerUser {
+    padding: 1rem;
+  }
+
+  .registerUser .contenedorFormulario {
+    flex-direction: column; 
+  }
+
+  .contenedorFormulario .input1 {
+    width: 100%;
+    padding: 0.5rem 0; 
+  }
+
+  .contentAdmin2 .registerUser .img1 {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentAdmin2 .registerUser {
+    padding: 0.8rem;
+    border-radius: 4px;
+  }
+
+  .input1 input,
+  .input1 select {
+    font-size: 0.85rem;
+  }
+
+  .buttonregister {
+    font-size: 0.9rem;
+  }
+}
+
 
 /*boton de adjuntar archivos*/
 .file-btn{
@@ -447,9 +496,265 @@ table .options .inactivar{
   cursor: pointer;
 }
 
-.contentRegisterEstado{
-  background-color: tomato;
+
+/*Modal*/
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
 }
-.contentFormEstado{
-  background-color: aqua;
+
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal h3 {
+  margin-bottom: 1rem;
+  color: #1f4e79;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.btn-confirm {
+  background: #27ae60;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #c0392b;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-confirm:hover { background: #1e874b; }
+.btn-cancel:hover  { background: #922b21; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+/*registrar estado*/
+
+.contentRegisterEstado {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1.5rem;
+  overflow-y: auto;
+}
+
+.contentFormEstado {
+  width: 100%;
+  max-width: 1100px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  padding: 2rem 2.5rem;
+  box-sizing: border-box;
+}
+
+.contentFormEstado h1 {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+  color: #1f2933;
+}
+
+.contentFormEstado > p {
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.contentFormEstado form {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.contentFormEstado label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.contentFormEstado input[type="date"],
+.contentFormEstado input[type="number"],
+.contentFormEstado input[type="text"],
+.contentFormEstado textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.95rem;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contentFormEstado input:focus,
+.contentFormEstado textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+.contentFormEstado textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.checklists {
+  margin: 1.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.checklists > div {
+  background-color: #f8fafc;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  padding: 1rem 1.25rem;
+  box-sizing: border-box;
+}
+
+.checklists h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: #1f4e79;
+}
+
+.grupo-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.grupo-checks label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+  color: #111827;
+  cursor: pointer;
+}
+
+.grupo-checks input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #2563eb;
+}
+
+.buttonregister {
+  margin-top: 0.5rem;
+  align-self: flex-end;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.buttonregister:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4);
+}
+
+.buttonregister:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+.buttonregister:disabled {
+  opacity: 0.6;
+  cursor: default;
+  box-shadow: none;
+}
+.contentFormEstado p[style*="color: red"] {
+  font-size: 0.85rem;
+}
+
+.contentFormEstado p[style*="color: green"] {
+  font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+  .contentFormEstado {
+    padding: 1.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .contentRegisterEstado {
+    padding: 1rem;
+  }
+
+  .contentFormEstado {
+    padding: 1.25rem 1rem;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  }
+
+  .contentFormEstado h1 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .checklists {
+    grid-template-columns: 1fr;
+  }
+
+  .buttonregister {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentFormEstado {
+    padding: 1rem 0.75rem;
+    border-radius: 10px;
+  }
+
+  .checklists > div {
+    padding: 0.75rem 0.9rem;
+  }
+
+  .grupo-checks label {
+    font-size: 0.85rem;
+  }
 }

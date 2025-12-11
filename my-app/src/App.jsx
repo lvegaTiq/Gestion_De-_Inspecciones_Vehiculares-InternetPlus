@@ -12,6 +12,10 @@ import RegistrarVehiculo from './components/MenuAdmin/Vehiculo/RegistrarVehiculo
 import RegistrarPropietario from './components/MenuAdmin/Propietario/RegistrarPropietario'
 import RegistrarUsuario from './components/MenuAdmin/Usuarios/RegistrarUser'
 import RegistroEstado from './components/MenuSupervisor/RegistroEstado'
+import ActualizarUsuario from './components/MenuAdmin/Usuarios/ActualizarUsuario'
+import ActualizarConductor from './components/MenuAdmin/Conductor/ActualizarConductor'
+import ActualizarVehiculo from './components/MenuAdmin/Vehiculo/ActualizarVehiculo'
+import ActualizarPropietario from './components/MenuAdmin/Propietario/ActualizarPropietario'
 
 function App() {
 
@@ -31,6 +35,12 @@ function App() {
             <RegistrarUsuario />
           </PrivateRouter>
         } />
+        
+        <Route path='/actualizar-usuario/:id' element = {
+          <PrivateRouter allowedRoles={['Admin']}>
+            <ActualizarUsuario />
+          </PrivateRouter>
+        } />
 
         <Route path='/conductor-admin' element = {
           <PrivateRouter allowedRoles={['Admin']}>
@@ -41,6 +51,12 @@ function App() {
         <Route path='/registrar-conductor' element = {
           <PrivateRouter allowedRoles={['Admin']}>
             <RegistrarConductor />
+          </PrivateRouter>
+        } />
+        
+        <Route path='/actualizar-conductor/:id' element = {
+          <PrivateRouter allowedRoles={['Admin']}>
+            <ActualizarConductor />
           </PrivateRouter>
         } />
 
@@ -56,6 +72,11 @@ function App() {
             <RegistrarVehiculo />
           </PrivateRouter>
         } />
+        <Route path='/actualizar-vehiculo/:id' element = {
+          <PrivateRouter allowedRoles={['Admin']}>
+            <ActualizarVehiculo />
+          </PrivateRouter>
+        } />
         
 
 
@@ -68,6 +89,11 @@ function App() {
         <Route path='/registrar-propietario' element = {
           <PrivateRouter allowedRoles={['Admin']}>
             <RegistrarPropietario />
+          </PrivateRouter>
+        } />
+        <Route path='/actualizar-propietario/:id' element = {
+          <PrivateRouter allowedRoles={['Admin']}>
+            <ActualizarPropietario />
           </PrivateRouter>
         } />
 

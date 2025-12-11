@@ -1,125 +1,270 @@
 import { Link, useNavigate } from "react-router-dom";
 import { clearAuth } from "../../../utils/auth";
-import logo from '../../../assets/img/logo/LogoSinFondo.png'
-import conductor from '../../../assets/img/Admin/conductor.png'
+import logo from "../../../assets/img/logo/LogoSinFondo.png";
+import conductor from "../../../assets/img/Admin/conductor.png";
 import { useRef, useState } from "react";
 import { MdDelete } from "react-icons/md";
-import { LuUpload } from "react-icons/lu";
-
 
 function RegistrarConductor() {
-    const navigate = useNavigate();
-    const cerrarSesion = ()=>{
-        clearAuth()
-        return navigate('/')
+  const navigate = useNavigate();
+  const cerrarSesion = () => {
+    clearAuth();
+    return navigate("/");
+  };
+
+  const inputRef = useRef();
+  const [selectFile, setSelectFile] = useState(null);
+
+  const [formData, setFormData] = useState({
+    nombre: "",
+    apellido: "",
+    tipoDoc: "",
+    numDoc: "",
+    email: "",
+    numTel: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleOnchange = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+
+      if (!file.type.startsWith("image/")) {
+        alert("Solo se permiten imágenes");
+        return;
+      }
+
+      setSelectFile(file);
     }
+  };
 
-    const inputRef =  useRef();
-    const [selectFile, setSelectFile] = useState(null);
+  const onChangeFile = () => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
+  };
 
-    const handleOnchange = (event)=>{
-        if(event.target.files && event.target.files.length > 0){
-            const file = event.target.files[0];
+  const removeFile = (e) => {
+    e.preventDefault();
+    setSelectFile(null);
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  };
 
-            if(!file.type.startsWith("image/")){
-                alert("Solo se pertmiten imagenes")
-                return
-            }
-            
-            setSelectFile(file);
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      setErrorMsg("");
+      setSuccessMsg("");
+    
+      const {
+        tipoVehiculo,
+        placa,
+        modelo,
+        fechaSoat,
+        fechaTecno,
+        propietarioId,
+        conductorId,
+      } = formData;
+  
+      if (
+        !tipoVehiculo ||
+        !placa ||
+        !modelo ||
+        !fechaSoat ||
+        !fechaTecno ||
+        !propietarioId ||
+        !conductorId
+      ) {
+        setErrorMsg("Por favor completa todos los campos.");
+        return;
+      }
+  
+      try {
+        setLoading(true);
+    
+        const resp = await fetch("http://localhost:3000/api/vehiculo-post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tipoVehiculo,
+            placa,
+            modelo,
+            fechaSoat,
+            fechaTecno,
+            propietarioId,
+            conductorId,
+          }),
+        });
+    
+        if (!resp.ok) {
+          const errorData = await resp.json().catch(() => ({}));
+          throw new Error(errorData.message || "Error al registrar el vehículo");
         }
+    
+        await resp.json();
+    
+        setSuccessMsg("Vehículo registrado correctamente.");
+        setTimeout(() => navigate("/vehiculo-admin"), 1000);
+      } catch (error) {
+        console.error(error);
+        setErrorMsg(error.message || "Error al registrar el vehículo.");
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const onChangeFile = ()=>{
-       inputRef.current.click()
-    }
 
-    const removeFile = ()=>{
-       setSelectFile(null)
-       inputRef.current.value = ""
-    }
+  return (
+    <div className="contentAdmin">
+      <div className="navAdmin">
+        <img src={logo} alt="Logo InternetPlus" />
+        <div className="navbar">
+          <ul className="menu">
+            <li>
+              <Link to="/conductor-admin">Regresar</Link>
+            </li>
+            <li>
+              <button onClick={cerrarSesion}>Cerrar Sesión</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="contentAdmin2">
+        <div className="registerUser">
+          <img src={conductor} className="img1" alt="Conductor" />
+          <form onSubmit={handleSubmit}>
+            <div className="contenedorFormulario1">
+              <div className="input1">
+                <label>Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  placeholder="Ingrese el nombre"
+                  value={formData.nombre}
+                  onChange={handleInputChange}
+                />
 
-    return(
-        <div className="contentAdmin">
-            <div className="navAdmin">
-                <img src={logo} alt='Logo InternetPlus'/>
-                <div className="navbar">
-                    <ul className='menu'>
-                        <li><Link to='/conductor-admin'>Regresar</Link></li>
-                        <li><button onClick={cerrarSesion}>Cerrar Sesión</button></li>
-                    </ul>
-                </div>
-            </div>
-            <div className="contentAdmin2">
-              <div className="registerUser">
-                <img src={conductor} className="img1" alt="Conductor" />
-                  <form action="">
-                    <div className="contenedorFormulario">
-                      <div className="input1">
-                        <label>Nombre</label>
-                        <input type="text" placeholder="Ingrese el nombre" />
-                        <label>Apellido</label>
-                        <input type="text" placeholder="Ingrese el apellido" />
-                        <label>Tipo de documento</label>
-                        <select>
-                          <option value="">-Seleccione una opción-</option>
-                          <option value="Cedula de ciudadania">Cedula de ciudadania</option>
-                          <option value="Cedula de extranjería">Cedula de extranjería</option>
-                          <option value="Pasaporte">Pasaporte</option>
-                        </select>
-                        <label>Número de documento</label>
-                        <input type="text" placeholder="Ingrese el numero de documento" />
-                      </div>
-                      <div className="input1">
-                        <label>Email</label>
-                        <input type="text" placeholder="Ingrese el Email" />
-                        
-                        <label>Teléfono</label>
-                        <input type="text" placeholder="Ingrese el numero de teléfono" />
-                        
+                <label>Apellido</label>
+                <input
+                  type="text"
+                  name="apellido"
+                  placeholder="Ingrese el apellido"
+                  value={formData.apellido}
+                  onChange={handleInputChange}
+                />
 
+                <label>Tipo de documento</label>
+                <select
+                  name="tipoDoc"
+                  value={formData.tipoDoc}
+                  onChange={handleInputChange}
+                >
+                  <option value="">-Seleccione una opción-</option>
+                  <option value="Cedula de ciudadania">
+                    Cédula de ciudadanía
+                  </option>
+                  <option value="Cedula de extranjería">
+                    Cédula de extranjería
+                  </option>
+                  <option value="Pasaporte">Pasaporte</option>
+                </select>
 
-                        <label>Licencia</label>
-                        <input 
-                            type="file" 
-                            ref={inputRef} 
-                            style={{display:"none",}}
-                            onChange={handleOnchange}
-                        />
-                        {!selectFile ? (
-                            <button type="button" className="file-btn" onClick={onChangeFile}>
-                                Subir imagen
-                            </button>
-                        ) : (
-                            <div className="preview-container">
-                                <img 
-                                    src={URL.createObjectURL(selectFile)} 
-                                    alt="Licencia"
-                                    className="preview-img"
-                                />
-                            </div>
-                        )}
+                <label>Número de documento</label>
+                <input
+                  type="text"
+                  name="numDoc"
+                  placeholder="Ingrese el número de documento"
+                  value={formData.numDoc}
+                  onChange={handleInputChange}
+                />
+              </div>
 
+              <div className="input1">
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Ingrese el Email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                />
 
-                        {selectFile && 
-                        <div className="select-file">
-                            <p>Nombre</p>
-                            <p>{selectFile.name}</p>
-                            <button onClick={removeFile}>
-                                <span>
-                                    <MdDelete />
-                                </span>
-                            </button>
-                        </div>}
-                        
-                      </div>
-                    </div>
-                    <button className="buttonregister">Registrar</button>
-                  </form>
+                <label>Teléfono</label>
+                <input
+                  type="text"
+                  name="numTel"
+                  placeholder="Ingrese el número de teléfono"
+                  value={formData.numTel}
+                  onChange={handleInputChange}
+                />
+
+                <label>Licencia</label>
+                <input
+                  type="file"
+                  ref={inputRef}
+                  style={{ display: "none" }}
+                  onChange={handleOnchange}
+                  accept="image/*"
+                />
+
+                {!selectFile ? (
+                  <button
+                    type="button"
+                    className="file-btn"
+                    onClick={onChangeFile}
+                  >
+                    Subir imagen
+                  </button>
+                ) : (
+                  <div className="preview-container">
+                    <img
+                      src={URL.createObjectURL(selectFile)}
+                      alt="Licencia"
+                      className="preview-img"
+                    />
+                  </div>
+                )}
+
+                {selectFile && (
+                  <div className="select-file">
+                    <p><strong>Archivo:</strong> {selectFile.name}</p>
+                    <button onClick={removeFile} type="button">
+                      <MdDelete />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
+
+            {errorMsg && (
+              <p style={{ color: "red", marginTop: "0.5rem" }}>{errorMsg}</p>
+            )}
+            {successMsg && (
+              <p style={{ color: "green", marginTop: "0.5rem" }}>
+                {successMsg}
+              </p>
+            )}
+
+            <button className="buttonregister" type="submit" disabled={loading}>
+              {loading ? "Registrando..." : "Registrar"}
+            </button>
+          </form>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-export default RegistrarConductor
+export default RegistrarConductor;
