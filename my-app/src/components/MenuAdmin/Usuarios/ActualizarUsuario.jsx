@@ -129,9 +129,7 @@ function ActualizarUsuario() {
         body.password = formData.password;
       }
 
-      const resp = await fetch(
-        `http://localhost:3000/api/users-update/${id}`,
-        {
+      const resp = await fetch(`http://localhost:3000/api/users-update/${id}`,{
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

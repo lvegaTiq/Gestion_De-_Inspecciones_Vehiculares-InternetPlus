@@ -142,9 +142,7 @@ function ActualizarConductor() {
         fd.append("licencia", selectFile);
       }
 
-      const resp = await fetch(
-        `http://localhost:3000/api/conductor-put/${id}`,
-        {
+      const resp = await fetch(`http://localhost:3000/api/conductor-put/${id}`,{
           method: "PUT",
           body: fd,
         }
@@ -288,7 +286,6 @@ function ActualizarConductor() {
                   accept="image/*"
                 />
 
-                {/* Si hay archivo nuevo, mostrar preview. Si no, mostrar licencia actual */}
                 {!selectFile ? (
                   <>
                     {licenciaActual && (

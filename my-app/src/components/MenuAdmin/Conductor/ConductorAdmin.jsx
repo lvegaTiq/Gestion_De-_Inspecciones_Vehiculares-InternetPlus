@@ -128,7 +128,7 @@ function ConductorAdmin() {
             </div>
             <input
               type="text"
-              placeholder="🔍 Buscar usuario por ID, número de documento..."
+              placeholder="🔍 Buscar conductor por ID, número de documento..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />

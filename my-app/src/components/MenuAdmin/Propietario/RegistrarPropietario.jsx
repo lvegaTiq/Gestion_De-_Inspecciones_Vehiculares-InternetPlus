@@ -98,7 +98,7 @@ function RegistrarPropietario() {
 
       <div className="contentAdmin2">
         <div className="registerUser">
-          <img src={propietatio} className="img1" alt="Usuario" />
+          <img src={propietatio} className="img1" alt="Propietario" />
           <form onSubmit={handleSubmit}>
             <div className="contenedorFormulario">
               <div className="input1">

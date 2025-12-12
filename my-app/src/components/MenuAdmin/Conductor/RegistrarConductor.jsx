@@ -145,7 +145,7 @@ function RegistrarConductor() {
         <div className="registerUser">
           <img src={conductor} className="img1" alt="Conductor" />
           <form onSubmit={handleSubmit}>
-            <div className="contenedorFormulario1">
+            <div className="contenedorFormulario">
               <div className="input1">
                 <label>Nombre</label>
                 <input
