@@ -5,7 +5,7 @@ const router = e.Router();
 
 router.get('/vehiculo-get', getDataVehiculo);
 router.post('/vehiculo-post', postDataVehiculo);
-router.patch('/vehiculo-cambio-estado', CambioEstadoVehiculo);
+router.patch('/vehiculo-cambio-estado/:id', CambioEstadoVehiculo);
 router.put('/vehiculo-update/:id', updateVehiculo);
 router.patch('/vehiculo-inactivar/:id', activarVehiculo);
 

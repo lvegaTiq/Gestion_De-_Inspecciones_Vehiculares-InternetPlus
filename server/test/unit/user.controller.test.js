@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import sinon from "sinon";
-
 import user from "../../Models/users.js";
 import { getData, create, actualizar, inactivarUsuario } from "../../controllers/users/Users.js";
 
@@ -11,25 +10,20 @@ function makeRes() {
   };
 }
 
-describe("Users Controller - Pruebas Unitarias", () => {
+describe("Controlador de usuario - Pruebas Unitarias", () => {
   afterEach(() => {
     sinon.restore();
   });
-
   describe("getData()", () => {
     it("debe responder 200 con usuarios paginados", async () => {
       const req = { query: { page: "1", limit: "10" } };
       const res = makeRes();
-
       const fakeUsers = { docs: [{ email: "a@a.com" }], totalDocs: 1 };
       sinon.stub(user, "paginate").resolves(fakeUsers);
-
       await getData(req, res);
-
       expect(user.paginate.calledOnce).to.equal(true);
       expect(res.status.calledOnceWith(200)).to.equal(true);
       expect(res.json.calledOnce).to.equal(true);
-
       const body = res.json.firstCall.args[0];
       expect(body.success).to.equal(true);
       expect(body.data).to.equal(fakeUsers);
@@ -38,11 +32,8 @@ describe("Users Controller - Pruebas Unitarias", () => {
     it("debe responder 500 si ocurre error", async () => {
       const req = { query: {} };
       const res = makeRes();
-
       sinon.stub(user, "paginate").rejects(new Error("Falla paginate"));
-
       await getData(req, res);
-
       expect(res.status.calledOnceWith(500)).to.equal(true);
       const body = res.json.firstCall.args[0];
       expect(body.success).to.equal(false);
@@ -53,8 +44,7 @@ describe("Users Controller - Pruebas Unitarias", () => {
   describe("create()", () => {
     it("debe responder 400 si body está vacío", async () => {
       const req = { body: {} };
-      const res = makeRes();
-
+      const res = makeRes();  
       await create(req, res);
 
       expect(res.status.calledOnceWith(400)).to.equal(true);
@@ -79,9 +69,7 @@ describe("Users Controller - Pruebas Unitarias", () => {
         },
       };
       const res = makeRes();
-
       sinon.stub(user, "findOne").resolves({ _id: "existe" });
-
       await create(req, res);
 
       expect(user.findOne.calledOnce).to.equal(true);
@@ -107,9 +95,7 @@ describe("Users Controller - Pruebas Unitarias", () => {
         },
       };
       const res = makeRes();
-
       sinon.stub(user, "findOne").resolves(null);
-
       await create(req, res);
 
       expect(res.status.calledOnceWith(400)).to.equal(true);
@@ -134,11 +120,8 @@ describe("Users Controller - Pruebas Unitarias", () => {
         },
       };
       const res = makeRes();
-
       sinon.stub(user, "findOne").resolves(null);
-
       sinon.stub(user.prototype, "save").resolves();
-
       await create(req, res);
 
       expect(user.findOne.calledOnce).to.equal(true);
@@ -166,9 +149,7 @@ describe("Users Controller - Pruebas Unitarias", () => {
         },
       };
       const res = makeRes();
-
       sinon.stub(user, "findOne").rejects(new Error("Error BD"));
-
       await create(req, res);
 
       expect(res.status.calledOnceWith(500)).to.equal(true);
@@ -178,7 +159,6 @@ describe("Users Controller - Pruebas Unitarias", () => {
       expect(body.error).to.equal("Error BD");
     });
   });
-
   describe("actualizar()", () => {
     it("debe responder 200 si actualiza usuario", async () => {
       const req = {
@@ -186,14 +166,10 @@ describe("Users Controller - Pruebas Unitarias", () => {
         body: { nombre: "NuevoNombre", telefono: "999" },
       };
       const res = makeRes();
-
       sinon.stub(user, "findByIdAndUpdate").resolves({ _id: "abc123", nombre: "NuevoNombre" });
-
       await actualizar(req, res);
 
       expect(user.findByIdAndUpdate.calledOnce).to.equal(true);
-
-      // Verifica que solo mandó los campos que vienen
       const args = user.findByIdAndUpdate.firstCall.args;
       expect(args[0]).to.equal("abc123");
       expect(args[1]).to.deep.equal({ nombre: "NuevoNombre", telefono: "999" });
@@ -207,9 +183,7 @@ describe("Users Controller - Pruebas Unitarias", () => {
     it("debe responder 404 si no encuentra usuario", async () => {
       const req = { params: { id: "noexiste" }, body: { nombre: "X" } };
       const res = makeRes();
-
       sinon.stub(user, "findByIdAndUpdate").resolves(null);
-
       await actualizar(req, res);
 
       expect(res.status.calledOnceWith(404)).to.equal(true);
@@ -220,7 +194,10 @@ describe("Users Controller - Pruebas Unitarias", () => {
     });
 
     it("debe responder 500 si ocurre error", async () => {
-      const req = { params: { id: "abc" }, body: { nombre: "X" } };
+      const req = { 
+        params: { id: "abc" }, 
+        body: { nombre: "X" } 
+      };
       const res = makeRes();
 
       sinon.stub(user, "findByIdAndUpdate").rejects(new Error("Falla update"));
