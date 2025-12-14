@@ -16,7 +16,6 @@ function ActualizarUsuario() {
     email: "",
     telefono: "",
     password: "",
-    confirmarPassword: "",
     role: "",
     estado: "",
   });
@@ -57,7 +56,6 @@ function ActualizarUsuario() {
           email: u.email || "",
           telefono: u.telefono || "",
           password: "",
-          confirmarPassword: "",
           role: u.role || "",
           estado: u.estado || "",
         });
@@ -100,14 +98,6 @@ function ActualizarUsuario() {
       !formData.role
     ) {
       setErrorMsg("Por favor completa los campos obligatorios.");
-      return;
-    }
-
-    if (
-      (formData.password || formData.confirmarPassword) &&
-      formData.password !== formData.confirmarPassword
-    ) {
-      setErrorMsg("Las contraseñas no coinciden.");
       return;
     }
 
@@ -260,15 +250,6 @@ function ActualizarUsuario() {
                   name="password"
                   placeholder="Nueva contraseña"
                   value={formData.password}
-                  onChange={handleChange}
-                />
-
-                <label>Confirmar contraseña</label>
-                <input
-                  type="password"
-                  name="confirmarPassword"
-                  placeholder="Confirme la nueva contraseña"
-                  value={formData.confirmarPassword}
                   onChange={handleChange}
                 />
 
