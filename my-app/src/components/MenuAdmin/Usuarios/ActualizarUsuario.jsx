@@ -35,7 +35,7 @@ function ActualizarUsuario() {
     const fetchUser = async () => {
       try {
         setLoadingUser(true);
-        const resp = await fetch(`http://localhost:3000/api/users-get`);
+        const resp = await fetch(`https://gestion-de-inspecciones-vehiculares.onrender.com/api/users-get`);
         if (!resp.ok) {
           throw new Error("No se pudo obtener la información del usuario.");
         }
@@ -129,7 +129,7 @@ function ActualizarUsuario() {
         body.password = formData.password;
       }
 
-      const resp = await fetch(`http://localhost:3000/api/users-update/${id}`,{
+      const resp = await fetch(`https://gestion-de-inspecciones-vehiculares.onrender.com/api/users-update/${id}`,{
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

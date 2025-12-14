@@ -16,7 +16,7 @@ function ControlDeEstado() {
   useEffect(() => {
     const fetchVehiculos = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/vehiculo-get",{
+        const response = await fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/vehiculo-get",{
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -137,7 +137,7 @@ function ControlDeEstado() {
                           className="actualizar"
                           onClick={() =>
                             window.open(
-                              `http://localhost:3000/api/generar-reporte/${item._id}`,
+                              `https://gestion-de-inspecciones-vehiculares.onrender.com/api/generar-reporte/${item._id}`,
                               "_blank"
                             )
                           }

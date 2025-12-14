@@ -34,7 +34,7 @@ function UserAdmin() {
     useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/users-get',{
+        const response = await fetch('https://gestion-de-inspecciones-vehiculares.onrender.com/api/users-get',{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,7 +51,7 @@ function UserAdmin() {
       }
 
       try{
-        const response = await fetch('http://localhost:3000/api/conductor-get',{
+        const response = await fetch('https://gestion-de-inspecciones-vehiculares.onrender.com/api/conductor-get',{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ function UserAdmin() {
 
       }
       try{
-        const response = await fetch('http://localhost:3000/api/propietario-get',{
+        const response = await fetch('https://gestion-de-inspecciones-vehiculares.onrender.com/api/propietario-get',{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ function UserAdmin() {
 
       }
       try{
-        const response = await fetch('http://localhost:3000/api/vehiculo-get',{
+        const response = await fetch('https://gestion-de-inspecciones-vehiculares.onrender.com/api/vehiculo-get',{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -125,7 +125,7 @@ function UserAdmin() {
       if (!usuarioSeleccionado) return;
     
       try {
-        const resp = await fetch(`http://localhost:3000/api/users-inactivar/${usuarioSeleccionado._id}`,{
+        const resp = await fetch(`https://gestion-de-inspecciones-vehiculares.onrender.com/api/users-inactivar/${usuarioSeleccionado._id}`,{
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ estado: nuevoEstado }),

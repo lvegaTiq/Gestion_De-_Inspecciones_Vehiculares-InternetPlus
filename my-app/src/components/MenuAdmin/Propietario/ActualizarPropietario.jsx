@@ -31,7 +31,7 @@ function ActualizarPropietario() {
     const fetchPropietario = async () => {
       try {
         setLoadingProp(true);
-        const resp = await fetch("http://localhost:3000/api/propietario-get");
+        const resp = await fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/propietario-get");
         if (!resp.ok) {
           throw new Error("No se pudo obtener la información del propietario.");
         }
@@ -102,7 +102,7 @@ function ActualizarPropietario() {
       };
 
       const resp = await fetch(
-        `http://localhost:3000/api/propietario-put/${id}`,
+        `https://gestion-de-inspecciones-vehiculares.onrender.com/api/propietario-put/${id}`,
         {
           method: "PUT",
           headers: {

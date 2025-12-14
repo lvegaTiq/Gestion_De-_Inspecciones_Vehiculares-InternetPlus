@@ -43,9 +43,9 @@ function ActualizarVehiculo() {
         setLoadingVehiculo(true);
 
         const [respVeh, respProp, respCond] = await Promise.all([
-          fetch("http://localhost:3000/api/vehiculo-get"),
-          fetch("http://localhost:3000/api/propietario-get"),
-          fetch("http://localhost:3000/api/conductor-get"),
+          fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/vehiculo-get"),
+          fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/propietario-get"),
+          fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/conductor-get"),
         ]);
 
         if (!respVeh.ok || !respProp.ok || !respCond.ok) {
@@ -132,7 +132,7 @@ function ActualizarVehiculo() {
       setLoading(true);
 
       const resp = await fetch(
-        `http://localhost:3000/api/vehiculo-update/${id}`,
+        `https://gestion-de-inspecciones-vehiculares.onrender.com/api/vehiculo-update/${id}`,
         {
           method: "PUT",
           headers: {

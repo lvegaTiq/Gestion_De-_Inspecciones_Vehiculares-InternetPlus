@@ -25,7 +25,7 @@ function AdminPropietario() {
   useEffect(() => {
     const fetchPropietario = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/propietario-get');
+        const response = await fetch('https://gestion-de-inspecciones-vehiculares.onrender.com/api/propietario-get');
         if (!response.ok) {
           throw new Error('Error al consultar los datos');
         }
@@ -59,7 +59,7 @@ function AdminPropietario() {
 
     try {
       const resp = await fetch(
-        `http://localhost:3000/api/propietario-patch/${propietarioSeleccionado._id}`,
+        `https://gestion-de-inspecciones-vehiculares.onrender.com/api/propietario-patch/${propietarioSeleccionado._id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

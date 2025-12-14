@@ -22,6 +22,7 @@ function RegistrarConductor() {
     numDoc: "",
     email: "",
     numTel: "",
+    estado:"Activo"
   });
 
   const [loading, setLoading] = useState(false);
@@ -64,66 +65,62 @@ function RegistrarConductor() {
   };
 
   const handleSubmit = async (e) => {
-      e.preventDefault();
-      setErrorMsg("");
-      setSuccessMsg("");
+    e.preventDefault();
+    setErrorMsg("");
+    setSuccessMsg("");
+    const { nombre, apellido, tipoDoc, numDoc, numTel, email } = formData;
+
+    if (!nombre || !apellido || !tipoDoc || !numDoc || !numTel) {
+      setErrorMsg("Por favor completa todos los campos obligatorios.");
+      return;
+    }
+
+    if (!selectFile) {
+      setErrorMsg("Por favor sube la imagen de la licencia.");
+      return;
+    }
+
+    try {
+      setLoading(true);
     
-      const {
-        tipoVehiculo,
-        placa,
-        modelo,
-        fechaSoat,
-        fechaTecno,
-        propietarioId,
-        conductorId,
-      } = formData;
-  
-      if (
-        !tipoVehiculo ||
-        !placa ||
-        !modelo ||
-        !fechaSoat ||
-        !fechaTecno ||
-        !propietarioId ||
-        !conductorId
-      ) {
-        setErrorMsg("Por favor completa todos los campos.");
-        return;
-      }
-  
-      try {
-        setLoading(true);
-    
-        const resp = await fetch("http://localhost:3000/api/vehiculo-post", {
+      const fd = new FormData();
+      fd.append("nombre", nombre);
+      fd.append("apellido", apellido);
+
+      fd.append("tipoDocumento", tipoDoc);
+
+      fd.append("numDoc", numDoc);
+      fd.append("numTel", numTel);
+
+      if (email) fd.append("email", email);
+
+      fd.append("licencia", selectFile);
+
+      const resp = await fetch(
+        "https://gestion-de-inspecciones-vehiculares.onrender.com/api/conductor-post",
+        {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            tipoVehiculo,
-            placa,
-            modelo,
-            fechaSoat,
-            fechaTecno,
-            propietarioId,
-            conductorId,
-          }),
-        });
-    
-        if (!resp.ok) {
-          const errorData = await resp.json().catch(() => ({}));
-          throw new Error(errorData.message || "Error al registrar el vehículo");
+          body: fd,
         }
-    
-        await resp.json();
-    
-        setSuccessMsg("Vehículo registrado correctamente.");
-        setTimeout(() => navigate("/vehiculo-admin"), 1000);
-      } catch (error) {
-        console.error(error);
-        setErrorMsg(error.message || "Error al registrar el vehículo.");
-      } finally {
-        setLoading(false);
+      );
+
+      if (!resp.ok) {
+        const errorData = await resp.json().catch(() => ({}));
+        throw new Error(errorData.message || "Error al registrar el conductor");
       }
-    };
+
+      await resp.json();
+
+      setSuccessMsg("Conductor registrado correctamente.");
+      setTimeout(() => navigate("/conductor-admin"), 1000);
+    } catch (error) {
+      console.error(error);
+      setErrorMsg(error.message || "Error al registrar el conductor.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
 
   return (

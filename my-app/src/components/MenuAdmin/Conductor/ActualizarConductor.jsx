@@ -36,7 +36,7 @@ function ActualizarConductor() {
     const fetchConductor = async () => {
       try {
         setLoadingConductor(true);
-        const resp = await fetch("http://localhost:3000/api/conductor-get");
+        const resp = await fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/conductor-get");
 
         if (!resp.ok) {
           throw new Error("No se pudo obtener la información del conductor.");
@@ -142,7 +142,7 @@ function ActualizarConductor() {
         fd.append("licencia", selectFile);
       }
 
-      const resp = await fetch(`http://localhost:3000/api/conductor-put/${id}`,{
+      const resp = await fetch(`https://gestion-de-inspecciones-vehiculares.onrender.com/api/conductor-put/${id}`,{
           method: "PUT",
           body: fd,
         }
@@ -291,7 +291,7 @@ function ActualizarConductor() {
                     {licenciaActual && (
                       <div className="preview-container">
                         <img
-                          src={`http://localhost:3000${licenciaActual}`}
+                          src={`https://gestion-de-inspecciones-vehiculares.onrender.com${licenciaActual}`}
                           alt="Licencia actual"
                           className="preview-img"
                         />

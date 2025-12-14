@@ -27,7 +27,7 @@ const CAMPOS_CHECKLIST_CARRO = {
   ],
   botiquin: [
     { key: "extintor", label: "Extintor" },
-    { key: "fechaVencimiento", label: "Fecha vencimiento extintor" },
+    { key: "fechaVencimiento", label: "Fecha vencimiento extintor" }, // 👈 este será input date
     { key: "llantaRepuesto", label: "Llanta de repuesto" },
     { key: "CrucetaAcordePernos", label: "Cruceta acorde a pernos" },
     { key: "Señales", label: "Señales" },
@@ -89,7 +89,7 @@ const CAMPOS_CHECKLIST_MOTO = {
 
 function RegistroEstado() {
   const navigate = useNavigate();
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   const [vehiculo, setVehiculo] = useState(null);
   const [tipoVehiculo, setTipoVehiculo] = useState("");
@@ -111,30 +111,37 @@ function RegistroEstado() {
     const fetchVehiculo = async () => {
       try {
         setLoadingVehiculo(true);
-        const resp = await fetch("http://localhost:3000/api/vehiculo-get");
-        if (!resp.ok) {
-          throw new Error("No se pudieron consultar los vehículos");
-        }
+
+        const resp = await fetch(
+          "https://gestion-de-inspecciones-vehiculares.onrender.com/api/vehiculo-get"
+        );
+
+        if (!resp.ok) throw new Error("No se pudieron consultar los vehículos");
+
         const result = await resp.json();
         const docs = result.data?.docs || [];
 
         const v = docs.find((item) => item._id === id);
-        if (!v) {
-          throw new Error("Vehículo no encontrado");
-        }
+        if (!v) throw new Error("Vehículo no encontrado");
 
         setVehiculo(v);
+
         const tipo = (v.tipoVehiculo || v.tipo || "").toLowerCase();
         setTipoVehiculo(tipo);
 
-        const config =
-          tipo === "moto" ? CAMPOS_CHECKLIST_MOTO : CAMPOS_CHECKLIST_CARRO;
+        const config = tipo === "moto" ? CAMPOS_CHECKLIST_MOTO : CAMPOS_CHECKLIST_CARRO;
 
+        // ✅ Inicializar checklist
         const initialChecklist = {};
         Object.entries(config).forEach(([grupo, campos]) => {
           initialChecklist[grupo] = {};
           campos.forEach((campo) => {
-            initialChecklist[grupo][campo.key] = false;
+            // 👇 fechaVencimiento debe ser string, no boolean
+            if (grupo === "botiquin" && campo.key === "fechaVencimiento") {
+              initialChecklist[grupo][campo.key] = "";
+            } else {
+              initialChecklist[grupo][campo.key] = false;
+            }
           });
         });
 
@@ -147,17 +154,28 @@ function RegistroEstado() {
       }
     };
 
-    if (id) {
-      fetchVehiculo();
-    }
+    if (id) fetchVehiculo();
   }, [id]);
 
   const handleCheckboxChange = (grupo, key) => {
+    // 👇 Evitar togglear la fecha (es input date)
+    if (grupo === "botiquin" && key === "fechaVencimiento") return;
+
     setChecklist((prev) => ({
       ...prev,
       [grupo]: {
         ...prev[grupo],
         [key]: !prev[grupo]?.[key],
+      },
+    }));
+  };
+
+  const handleFechaVencimientoChange = (value) => {
+    setChecklist((prev) => ({
+      ...prev,
+      botiquin: {
+        ...(prev.botiquin || {}),
+        fechaVencimiento: value,
       },
     }));
   };
@@ -180,36 +198,44 @@ function RegistroEstado() {
     try {
       setLoading(true);
 
-      const config =
-        tipoVehiculo === "moto" ? CAMPOS_CHECKLIST_MOTO : CAMPOS_CHECKLIST_CARRO;
+      const isMoto = tipoVehiculo === "moto";
+      const config = isMoto ? CAMPOS_CHECKLIST_MOTO : CAMPOS_CHECKLIST_CARRO;
 
+      // ✅ Payload EXACTO como tus CURL (mismos nombres)
       const payload = {
         FechaEstado: fechaEstado,
         kilometraje: Number(kilometraje),
-        Observacion: observacion,
+        Observacion: observacion || "",
         vehiculoId: id,
       };
 
-      Object.entries(config).forEach(([grupo]) => {
-        payload[grupo] = [
-          {
-            ...(checklist[grupo] || {}),
-          },
-        ];
+      // ✅ Grupos como array con 1 objeto
+      Object.keys(config).forEach((grupo) => {
+        payload[grupo] = [{ ...(checklist[grupo] || {}) }];
       });
 
-      const resp = await fetch("http://localhost:3000/api/estado-post", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      // ✅ Moto NO lleva botiquin
+      if (isMoto) {
+        delete payload.botiquin;
+      } else {
+        // ✅ Carro: garantizar que fechaVencimiento sea string (tipo "2025-10-10")
+        if (!payload.botiquin?.[0]) payload.botiquin = [{}];
+        payload.botiquin[0].fechaVencimiento = checklist?.botiquin?.fechaVencimiento || "";
+      }
+
+      const resp = await fetch(
+        "https://gestion-de-inspecciones-vehiculares.onrender.com/api/estado-post",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const data = await resp.json().catch(() => ({}));
 
-      if (!resp.ok || !data.success) {
-        throw new Error(data.message || "No se pudo registrar el estado.");
+      if (!resp.ok || data?.success === false) {
+        throw new Error(data?.message || "No se pudo registrar el estado.");
       }
 
       setSuccessMsg("Estado del vehículo registrado correctamente.");
@@ -281,36 +307,48 @@ function RegistroEstado() {
               placeholder="Ingrese el kilometraje"
             />
 
-            {/* 🔹 Checklists dinámicos según tipo */}
             <div className="checklists">
-              {(
-                tipoVehiculo === "moto"
-                  ? CAMPOS_CHECKLIST_MOTO
-                  : CAMPOS_CHECKLIST_CARRO
-              ) &&
-                Object.entries(
-                  tipoVehiculo === "moto"
-                    ? CAMPOS_CHECKLIST_MOTO
-                    : CAMPOS_CHECKLIST_CARRO
-                ).map(([grupo, campos]) => (
-                  <div className={grupo.toLowerCase()} key={grupo}>
-                    <h3>{grupo}</h3>
-                    <div className="grupo-checks">
-                      {campos.map((campo) => (
+              {Object.entries(
+                tipoVehiculo === "moto" ? CAMPOS_CHECKLIST_MOTO : CAMPOS_CHECKLIST_CARRO
+              ).map(([grupo, campos]) => (
+                <div className={grupo.toLowerCase()} key={grupo}>
+                  <h3>{grupo}</h3>
+
+                  <div className="grupo-checks">
+                    {campos.map((campo) => {
+                      // ✅ Para carro: fechaVencimiento es INPUT DATE, NO checkbox
+                      if (
+                        grupo === "botiquin" &&
+                        campo.key === "fechaVencimiento" &&
+                        tipoVehiculo !== "moto"
+                      ) {
+                        return (
+                          <label key={campo.key} style={{ display: "block" }}>
+                            {campo.label}
+                            <input
+                              type="date"
+                              value={checklist?.botiquin?.fechaVencimiento || ""}
+                              onChange={(e) => handleFechaVencimientoChange(e.target.value)}
+                              style={{ display: "block", marginTop: "6px" }}
+                            />
+                          </label>
+                        );
+                      }
+
+                      return (
                         <label key={campo.key} style={{ display: "block" }}>
                           <input
                             type="checkbox"
                             checked={!!checklist[grupo]?.[campo.key]}
-                            onChange={() =>
-                              handleCheckboxChange(grupo, campo.key)
-                            }
+                            onChange={() => handleCheckboxChange(grupo, campo.key)}
                           />{" "}
                           {campo.label}
                         </label>
-                      ))}
-                    </div>
+                      );
+                    })}
                   </div>
-                ))}
+                </div>
+              ))}
             </div>
 
             <label>Observación</label>

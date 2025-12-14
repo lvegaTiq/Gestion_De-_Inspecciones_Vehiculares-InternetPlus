@@ -53,7 +53,7 @@ function RegistrarPropietario() {
         numTel,
       };
 
-      const resp = await fetch("http://localhost:3000/api/propietario-post", {
+      const resp = await fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/propietario-post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

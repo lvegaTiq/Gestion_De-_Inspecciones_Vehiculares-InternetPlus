@@ -31,8 +31,8 @@ function RegistrarVehiculo() {
     const fetchData = async () => {
       try {
         const [respProp, respCond] = await Promise.all([
-          fetch("http://localhost:3000/api/propietario-get"),
-          fetch("http://localhost:3000/api/conductor-get"),
+          fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/propietario-get"),
+          fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/conductor-get"),
         ]);
 
         if (!respProp.ok || !respCond.ok) {
@@ -102,7 +102,7 @@ function RegistrarVehiculo() {
     try {
       setLoading(true);
 
-      const resp = await fetch("http://localhost:3000/api/vehiculo-post", {
+      const resp = await fetch("https://gestion-de-inspecciones-vehiculares.onrender.com/api/vehiculo-post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

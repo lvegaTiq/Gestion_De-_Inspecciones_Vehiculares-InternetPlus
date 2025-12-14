@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {  
     "start": "nodemon server.js",
-    "test": "mocha \"test/**/*.test.js\" --timeout 10000",
+    "test:unit": "mocha \"test/**/*.test.js\" --timeout 10000",
     "test:integration": "mocha \"test/integration/**/*.test.js\"",
     "test:watch": "mocha --watch \"test/**/*.test.js\" --timeout 10000",
     "test:system": "mocha \"test/system/**/*.test.js\""

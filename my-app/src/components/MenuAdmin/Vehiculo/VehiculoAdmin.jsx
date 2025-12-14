@@ -26,7 +26,7 @@ function VehiculoAdmin() {
   useEffect(() => {
     const fetchVehiculo = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/vehiculo-get');
+        const response = await fetch('https://gestion-de-inspecciones-vehiculares.onrender.com/api/vehiculo-get');
 
         if (!response.ok) {
           throw new Error('Error al momento de consultar los datos');
@@ -72,9 +72,7 @@ function VehiculoAdmin() {
     if (!vehiculoSeleccionado) return;
 
     try {
-      const resp = await fetch(
-        `http://localhost:3000/api/vehiculo-inactivar/${vehiculoSeleccionado._id}`,
-        {
+      const resp = await fetch(`https://gestion-de-inspecciones-vehiculares.onrender.com/api/vehiculo-inactivar/${vehiculoSeleccionado._id}`,{
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ estadoVehiculo: nuevoEstado }),
@@ -202,7 +200,7 @@ function VehiculoAdmin() {
                           className="actualizar"
                           onClick={() =>
                             window.open(
-                              `http://localhost:3000/api/generar-reporte/${item._id}`,
+                              `https://gestion-de-inspecciones-vehiculares.onrender.com/api/generar-reporte/${item._id}`,
                               "_blank"
                             )
                           }

@@ -25,7 +25,7 @@ function ConductorAdmin() {
     const dataConductor = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/conductor-get"
+          "https://gestion-de-inspecciones-vehiculares.onrender.com/api/conductor-get"
         );
         if (!response.ok) {
           throw new Error("Error al consultar los datos");
@@ -54,7 +54,7 @@ function ConductorAdmin() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/conductor-inactivar/${conductorSeleccionado._id}`,
+        `https://gestion-de-inspecciones-vehiculares.onrender.com/api/conductor-inactivar/${conductorSeleccionado._id}`,
         {
           method: "PATCH",
           headers: {
@@ -159,7 +159,7 @@ function ConductorAdmin() {
                       <td>{item.numTel}</td>
                       <td>
                         <img
-                          src={`http://localhost:3000${item.licencia}`}
+                          src={`https://gestion-de-inspecciones-vehiculares.onrender.com${item.licencia}`}
                           style={{ width: "80px", height: "auto" }}
                           alt="Licencia"
                         />
